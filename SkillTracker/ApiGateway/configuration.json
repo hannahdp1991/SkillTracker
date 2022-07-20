@@ -1,0 +1,68 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/skill-tracker/api/v1/admin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 64082
+        }
+      ],
+      "UpstreamPathTemplate": "/adminservice",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/skill-tracker/api/v1/admin/{criteria}/{criteriaValue}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 64082
+        }
+      ],
+      "UpstreamPathTemplate": "/adminservice/{criteria}/{criteriaValue}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/skill-tracker/api/v1/engineer",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 59796
+        }
+      ],
+      "UpstreamPathTemplate": "/engineerservice",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/add-profile",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 59796
+        }
+      ],
+      "UpstreamPathTemplate": "/engineerservice/add-profile",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/update-profile/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 59796
+        }
+      ],
+      "UpstreamPathTemplate": "/engineerservice/update-profile/{userId}",
+      "UpstreamHttpMethod": [ "Put" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/admin"
+  }
+}

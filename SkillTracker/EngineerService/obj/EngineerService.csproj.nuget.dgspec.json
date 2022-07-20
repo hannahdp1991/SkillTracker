@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cogdotnet212\\source\\repos\\EngineerService\\EngineerService.csproj": {}
+    "C:\\Users\\cogdotnet212\\source\\repos\\SkillTracker\\EngineerService\\EngineerService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cogdotnet212\\source\\repos\\EngineerService\\EngineerService.csproj": {
+    "C:\\Users\\cogdotnet212\\source\\repos\\SkillTracker\\EngineerService\\EngineerService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cogdotnet212\\source\\repos\\EngineerService\\EngineerService.csproj",
+        "projectUniqueName": "C:\\Users\\cogdotnet212\\source\\repos\\SkillTracker\\EngineerService\\EngineerService.csproj",
         "projectName": "EngineerService",
-        "projectPath": "C:\\Users\\cogdotnet212\\source\\repos\\EngineerService\\EngineerService.csproj",
+        "projectPath": "C:\\Users\\cogdotnet212\\source\\repos\\SkillTracker\\EngineerService\\EngineerService.csproj",
         "packagesPath": "C:\\Users\\cogdotnet212\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cogdotnet212\\source\\repos\\EngineerService\\obj\\",
+        "outputPath": "C:\\Users\\cogdotnet212\\source\\repos\\SkillTracker\\EngineerService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -46,9 +46,21 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Azure.Messaging.ServiceBus": {
+              "target": "Package",
+              "version": "[7.8.1, )"
+            },
             "DataAnnotationsExtensions": {
               "target": "Package",
               "version": "[5.0.1.27, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.26, )"
+            },
+            "Microsoft.Extensions.Caching.Redis": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
@@ -57,6 +69,46 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.15.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Serilog.Enrichers.Environment": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Serilog.Exceptions": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "Serilog.Sinks.Debug": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Serilog.Sinks.Elasticsearch": {
+              "target": "Package",
+              "version": "[8.4.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.1, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.3.1, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [

@@ -1,4 +1,5 @@
-﻿using EngineerService.Models;
+﻿using EngineerService.Exceptions;
+using EngineerService.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -29,29 +30,48 @@ namespace EngineerService.Repository
             }
         }
 
-        public bool Update(int userId, SkillProfile profile)
+        public bool Update(string userId, UpdateSkillProfile profile)
         {
             try
             {
                 var foundSkillProfile = this.GetSkillProfileById(userId);
                 if (foundSkillProfile != null)
                 {
-                    var filter = Builders<SkillProfile>.Filter.Eq(profile => profile.Id, foundSkillProfile.Id);
-                    var result = _context.SkillProfiles.ReplaceOne(filter, profile);
-                    return result.IsAcknowledged && result.ModifiedCount > 0;
+                    if ((profile.LastUpdated - foundSkillProfile?.AddedDate)?.TotalDays > 10)
+                    {
+                        var filter = Builders<SkillProfile>.Filter.Eq(profile => profile.Id, foundSkillProfile.Id);
+                        SkillProfile updatedProfile = CreateUpdatedProfile(profile, foundSkillProfile);
+                        var result = _context.SkillProfiles.ReplaceOne(filter, updatedProfile);
+                        return result.IsAcknowledged && result.ModifiedCount > 0;
+                    }
+                    else
+                    {
+                        throw new Exception("You can update a profile only after 10 days from the date of addition");
+                    }
                 }
 
                 return false;
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                throw ex;
             }
         }
 
-        private SkillProfile GetSkillProfileById(int userId)
+        private SkillProfile CreateUpdatedProfile(UpdateSkillProfile profile, SkillProfile foundSkillProfile)
         {
-            var filter = Builders<SkillProfile>.Filter.Eq(profile => profile.AssociateInfo.AssociateId, Convert.ToInt32(userId));
+            var updatedProfile = new SkillProfile();
+            updatedProfile.Id = foundSkillProfile.Id;
+            updatedProfile.AssociateInfo = foundSkillProfile.AssociateInfo;
+            updatedProfile.SkillInfo = profile.SkillInfo;
+            updatedProfile.LastUpdated = profile.LastUpdated;
+            updatedProfile.AddedDate = foundSkillProfile.AddedDate;
+            return updatedProfile;
+        }
+
+        private SkillProfile GetSkillProfileById(string userId)
+        {
+            var filter = Builders<SkillProfile>.Filter.Eq(profile => profile.AssociateInfo.AssociateId, userId.Trim());
             var result =
                 _context.SkillProfiles.Find(filter).ToList().OrderByDescending(profile => profile.SkillInfo.Max(skill => skill.ExpertiseLevel)).FirstOrDefault();
             return result;

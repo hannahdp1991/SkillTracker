@@ -11,10 +11,10 @@ namespace AdminService.Models
     {
         public string Name { get; set; }
 
-        public int AssociateId { get; set; }
+        public string AssociateId { get; set; }
 
         public string Email { get; set; }
 
-        public int Mobile { get; set; }
+        public string Mobile { get; set; }
     }
 }

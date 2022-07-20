@@ -3,23 +3,19 @@
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see https://aka.ms/containercompat
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/core/sdk AS build-env
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /src
-COPY ["../SkillTracker.Service/SkillTracker.Service.csproj", "../SkillTracker.Service/"]
-RUN dotnet restore "../SkillTracker.Service/SkillTracker.Service.csproj"
-COPY . .
-WORKDIR "/src/../SkillTracker.Service"
-RUN dotnet build "SkillTracker.Service.csproj" -c Release -o /app/build
+COPY *.csproj ./
 
-FROM build AS publish
-RUN dotnet publish "SkillTracker.Service.csproj" -c Release -o /app/publish
+RUN dotnet restore
 
-FROM base AS final
+COPY . ./
+
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SkillTracker.Service.dll"]
+
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "EngineerService.dll"]

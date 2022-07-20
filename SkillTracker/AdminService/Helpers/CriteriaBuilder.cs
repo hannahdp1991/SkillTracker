@@ -18,7 +18,7 @@ namespace AdminService.Helpers
 
         public void Build(string criteria, string criteriaValue)
         {
-            switch (criteria)
+            switch (criteria.Trim().ToLower())
             {
                 case "associateid":
                     this.AssociateIdCriteria(criteriaValue);

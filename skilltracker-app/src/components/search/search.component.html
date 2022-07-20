@@ -1,0 +1,23 @@
+<h3>Search</h3>
+
+<form [formGroup]="searchForm">
+    <mat-form-field>
+        <mat-error *ngIf="criteriaTypeControl?.invalid">Please select criteria type.</mat-error>
+        <mat-select placeholder="Search by criteria" formControlName="criteriaType">
+            <mat-option value="associateid">Associate Id</mat-option>
+            <mat-option value="associatename">Associate name</mat-option>
+            <mat-option value="skillname">Skill name</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-error *ngIf="criteriaValueControl?.invalid">Please enter a valid criteria value.</mat-error>
+        <input matInput placeholder="Criteria value" formControlName="criteriaValue">
+    </mat-form-field>
+
+    <button matbutton (click)="onSubmit()">Search</button>
+</form>
+
+<div *ngIf="skillProfileList$ | async as skillProfileList">
+    <skill-profile-viewer [skillProfileList]="skillProfileList"></skill-profile-viewer>
+</div>

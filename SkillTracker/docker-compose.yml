@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+    db:
+        image: skilltracker.azurecr.io/samples/mongo
+        ports: 
+            - "27017:27017"
+                
+    rabbitmq3:
+        image: skilltracker.azurecr.io/samples/rabbitmq:3.8-management-alpine
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            - RABBITMQ_DEFAULT_USER=myuser
+            - RABBITMQ_DEFAULT_PASS=mypassword
+
+    elasticsearch:
+        image: skilltracker.azurecr.io/samples/elasticsearch
+        ports:
+            - "9200:9200"
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+        environment:
+            - xpack.monitoring.enabled=true
+            - xpack.watcher.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - discovery.type=single-node
+        networks:
+            - elastic
+            
+    kibana:
+        image: skilltracker.azurecr.io/samples/kibana
+        ports:
+            - "5601:5601"
+        depends_on:
+            - elasticsearch
+        environment:
+            - ELASTICSEARCH_URL=http://elasticsearch:9200
+    
+    redis:
+        image: skilltracker.azurecr.io/samples/redis
+        ports:
+            - "6379:6379"
+            
+    adminservice:
+        image: skilltracker.azurecr.io/samples/adminapi
+        ports:
+            - "64082:80"
+        depends_on:
+            - db
+            - rabbitmq3
+        restart: on-failure
+        environment:
+            mongo_db: "mongodb://db:27017"
+            rabbit_mq: "amqp://myuser:mypassword@rabbitmq3:5672/"
+            redis: "redis:6379"
+            
+    engineerservice:
+        image: skilltracker.azurecr.io/samples/engineerapi
+        ports:
+            - "59796:80"
+        depends_on:
+            - db
+            - rabbitmq3
+            - elasticsearch
+        restart: on-failure
+        environment:
+            mongo_db: "mongodb://db:27017"
+            rabbit_mq: "amqp://myuser:mypassword@rabbitmq3:5672/"
+            elastic_search: "http://elasticsearch:9200"
+            redis: "redis:6379" 
+networks:
+   elastic:
+     driver: bridge      
+volumes:
+    elasticsearch-data:

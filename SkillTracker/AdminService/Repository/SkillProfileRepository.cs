@@ -23,7 +23,6 @@ namespace AdminService.Repository
         public IList<SkillProfile> Get()
         {
             var list = this.skillProfileContext.SkillProfiles.Find(_ => true).ToList();
-            System.Diagnostics.Debug.WriteLine(list[0]?.SkillInfo?.Count);
             return list;
         }
 
@@ -33,7 +32,7 @@ namespace AdminService.Repository
             switch (criteria.CriteriaType)
             {
                 case CriteriaType.AssociateId:
-                    filter = Builders<SkillProfile>.Filter.Eq(profile => profile.AssociateInfo.AssociateId, Convert.ToInt32(criteria.CriteraValue));
+                    filter = Builders<SkillProfile>.Filter.Eq(profile => profile.AssociateInfo.AssociateId, criteria.CriteraValue.Trim());
                     break;
                 case CriteriaType.AssociateName:
                     filter = Builders<SkillProfile>.Filter.Regex(profile => profile.AssociateInfo.Name,

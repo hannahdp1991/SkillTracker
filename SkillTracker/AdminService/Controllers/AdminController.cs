@@ -1,6 +1,7 @@
 ﻿using AdminService.Helpers;
 using AdminService.Models;
 using AdminService.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,8 +10,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace UserService.Controllers
+namespace AdminService.Controllers
 {
+    [EnableCors]
     [ApiController]
     [Route("skill-tracker/api/v1/[controller]")]
     public class AdminController : ControllerBase

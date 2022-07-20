@@ -1,0 +1,29 @@
+<ng-container *ngIf="skillProfileList.length > 0 else noSkillsTemplate;">
+    <mat-accordion>
+        <h3>Skill Profile List</h3>
+        <mat-expansion-panel *ngFor="let skillProfile of skillProfileList">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{skillProfile.associateInfo.associateId}} - {{skillProfile.associateInfo.name}}
+                </mat-panel-title>
+                <mat-panel-description>Skills</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-table #table [dataSource]="skillProfile.skillInfo">
+                <ng-container matColumnDef="skillName">
+                    <mat-header-cell *matHeaderCellDef>Skill Name</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.skillName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="expertiseLevel">
+                    <mat-header-cell *matHeaderCellDef>Expertise Level</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.expertiseLevel}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-paginator *ngIf="skillProfileList.length > 10" #paginator [pageSize]=10 [showFirstLastButtons]="true"
+        [pageSizeOptions]="[5,10,20]"></mat-paginator>
+</ng-container>
+<ng-template #noSkillsTemplate>
+    <p>No skills found for your search criteria.</p>
+</ng-template>

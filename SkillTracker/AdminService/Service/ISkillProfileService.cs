@@ -8,7 +8,7 @@ namespace AdminService.Service
 {
     public interface ISkillProfileService
     {
-        public IList<SkillProfile> SearchProfile(Criteria criteria);
+        public Task<IList<SkillProfile>> SearchProfile(Criteria criteria);
 
         public IList<SkillProfile> Get();
     }

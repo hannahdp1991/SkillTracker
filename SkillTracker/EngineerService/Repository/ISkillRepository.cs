@@ -6,6 +6,6 @@ namespace EngineerService.Repository
     {
         public bool Add(SkillProfile profile);
 
-        public bool Update(int userId, SkillProfile profile);
+        public bool Update(string userId, UpdateSkillProfile profile);
     }
 }

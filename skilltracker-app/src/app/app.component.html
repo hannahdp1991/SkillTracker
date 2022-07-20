@@ -1,0 +1,5 @@
+<nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="skills" [class.active]="isActive('tracker')">Skill Tracker</a>
+    <a mat-tab-link routerLink="search" [class.active]="isActive('search')">Search Skills</a>
+</nav>
+<router-outlet></router-outlet>

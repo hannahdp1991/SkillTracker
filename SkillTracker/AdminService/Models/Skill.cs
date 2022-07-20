@@ -10,7 +10,6 @@ namespace AdminService.Models
     {
         public string SkillName { get; set; }
 
-        [Max(30)]
         public int ExpertiseLevel { get; set; }
     }
 }
